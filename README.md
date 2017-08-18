@@ -1,5 +1,19 @@
 # Rrome
 
+## Usage
+
+```
+   var rrome = require('rrome')(bucket);
+
+```
+
+### getModels(model_id[], cb)
+
+### getModel(id, cb)
+
+### insert(model_id, model_data, owner, cb)
+
+
 ## Data types
 
 - Text
