@@ -4,12 +4,16 @@
   "description": "## Data types",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
     "url": "git@saaanic.com:rrome_backend.git"
   },
   "author": "Metamorphic Studio",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "couchbase": "^2.3.5",
+    "uuid": "^3.1.0"
+  }
 }
