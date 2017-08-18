@@ -5,16 +5,16 @@ var couchbase = require('couchbase');
 var N1qlQuery = couchbase.N1qlQuery;
 
 class Rrome {
-   constructor(bucket){
+   constructor(bucket, bucketName){
       this.bucket = bucket;
+      this.bucketName = bucketName;
    }
 
-   getModels(cb){
-      var bucketName="rrome-test";
-      const query = N1qlQuery.fromString('SELECT * FROM `' + bucketName + '` WHERE type="model"');
+   getModels(cb){ 
+      const query = N1qlQuery.fromString('SELECT * FROM `' + this.bucketName + '` WHERE type="model"');
       this.bucket.query(query, (err, rows) => {
          if(err) return cb(err);
-         cb(null, rows.map((x) => { return x[bucketName] }));
+         cb(null, rows.map((x) => { return x[this.bucketName] }));
       });
    }
 
@@ -44,6 +44,6 @@ class Rrome {
 
 }
 
-module.exports = (bucket) => {
-   return new Rrome(bucket);
+module.exports = (bucket, name) => {
+   return new Rrome(bucket, name);
 };
