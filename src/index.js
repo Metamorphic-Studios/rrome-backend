@@ -2,8 +2,10 @@
 
 class Rrome {
    constructor(bucket){
-      console.log(bucket);
+      this.bucket = bucket;
    }
+
+
 }
 
 module.exports = (bucket) => {
