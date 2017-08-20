@@ -5,6 +5,9 @@
 ```
    var rrome = require('rrome')(bucket);
 
+   rrome.on('ready', () => {
+      //Do all your roaming here 
+   });
 ```
 
 ### getModels(model_id[], cb)
@@ -50,7 +53,7 @@
 ```
    "Tenant": {
       id: $uuid,
-      structs: [$model_id],
+      structs: [$model_id, ...],
       branding: $branding
    }
 
