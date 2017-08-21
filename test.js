@@ -13,11 +13,18 @@ var testModel = () => {
 
 var testGet = () => {
    rrome.getModels((err, rows) => {
-      console.log(err, rows.map((x) => x.model));
+      console.log(err, rows);
    });
 }
 rrome.on('ready', () => {
-   rrome.insert('b680f44c-43c4-4a88-92d0-c0f3b1d2c599', {clientNo: "121", name: "HI", id: 'id'});
+
+   rrome.updateModel('700f66d7-c33d-48b3-b691-c26aebb12456', {"Past Address": {type: "TEXT", id: "pastAddress"}}, ["pastAddress"], (err, data) => {
+      console.log(err, data);
+   });
+   rrome.updateData('67a34ffa-c714-4cdc-9aeb-45147d8b2501', {clientNo: 1111}, (err, data) => {
+
+   });
+
 });
 //testGet();
 

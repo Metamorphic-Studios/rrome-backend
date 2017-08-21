@@ -5,6 +5,7 @@ var EventEmitter = require('events');
 var uuid = require('uuid');
 var couchbase = require('couchbase');
 var N1qlQuery = couchbase.N1qlQuery;
+var utils = require('./utils');
 
 class Rrome extends EventEmitter{
    constructor(cluster){
@@ -21,19 +22,64 @@ class Rrome extends EventEmitter{
       });
    }
 
-   insert(id, object, cb){
+   //Data manipulation
+   insertData(id, object, cb){
+      console.log("INSERT FOR MODEL:", id);
       this.getModel(id, (err, model) => {
          var model = model.model;
-         var clean = {};
-         for(var k in model){
-            if(object[model[k].id]){ 
-               clean[model[k].id] = object[model[k].id];       
-            }
-         }
-         console.log(clean);
+         var clean = utils.clean(model, object);
+         var _id = uuid.v4();
+         clean._id = {model: id, id: _id}
+         this.buckets.data.insert(_id, clean, (err) => {
+            cb(err, _id);
+         });
+      });
+   }
+    
+   deleteData(id, cb){
+      this.buckets.data.delete(id, cb);
+   }
+
+   getData(id, cb){
+    console.log("GET:", id);
+      this.buckets.data.get(id, (err, data) => {
+         cb(err, data.value);
       });
    }
 
+   cloneData(id, cb){
+      this.buckets.data.get(id, (err, data) => {
+         var id = uuid.v4();
+         var d = data.value;
+         d._id = {
+            model: d._id,
+            id: id
+         };
+
+         this.buckets.data.insert(id, d, (err) => {
+            cb(err, d);
+         });
+      });
+   }
+
+   updateData(id, object, cb){
+      console.log("UPDATE:", id);
+      this.getData(id, (err, data) => {
+         this.getModel(data._id.model, (err, model) => {
+            var c = utils.clean(model.model, object); 
+            var clean = {
+               ...data,
+               ...c
+            }
+            
+            this.buckets.data.replace(id, clean, (err) => {
+               cb(err, clean);
+            });
+         });
+      });
+   }
+
+   //Model manipulation
    getModels(cb){ 
       const query = N1qlQuery.fromString('SELECT * FROM `' + conf.structureBucket + '` WHERE type="model"');
       this.buckets.structures.query(query, (err, rows) => {
@@ -65,7 +111,25 @@ class Rrome extends EventEmitter{
       });
    }
 
+   updateModel(id, struct, display_keys, cb){
+      this.getModel(id, (err, data) => {
+         var model = {
+            ...data,
+            model: {
+               ...struct,
+               ...data.model
+            },
+            display_keys: data.display_keys.concat(display_keys)
+         }
 
+         this.buckets.structures.replace(id, model, (err, res) => {
+            cb(err, model);
+         });
+      });
+   }
+
+
+   //Initialisation stuff
    initIndex(bucket, bucketName, cb){
       var q = N1qlQuery.fromString("CREATE PRIMARY INDEX ON " + bucketName + " USING GSI");
       bucket.query(q, (err, res) => { 
@@ -79,7 +143,7 @@ class Rrome extends EventEmitter{
             this.cluster.manager().createBucket(conf.structureBucket, {}, (err) => {
                let bucket = this.cluster.openBucket(conf.structureBucket);
                this.initIndex(bucket, conf.structureBucket, () => {
-                  cb(err, bucket);     
+                  cb(null, bucket);     
                });
             });
          }, 
@@ -87,7 +151,7 @@ class Rrome extends EventEmitter{
             this.cluster.manager().createBucket(conf.dataBucket, {}, (err) => {
                let bucket = this.cluster.openBucket(conf.dataBucket);
                this.initIndex(bucket, conf.dataBucket, () => {
-                  cb(err, bucket);
+                  cb(null, bucket);
                });
             });
          }
