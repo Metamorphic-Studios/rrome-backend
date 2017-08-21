@@ -1,6 +1,8 @@
 ![Rrome Logo](/logo.png)
 
 
+Rrome is a dynamic ORM powered by NoSQL
+
 ## Usage
 
 ```
@@ -11,11 +13,18 @@
    });
 ```
 
-### getModels(model_id[], cb)
+### Data methods
+-  getData(id, cb)
+-  insertData(model, data, cb)
+-  cloneData(id, cb)
+-  deleteData(id, cb)
+-  updateData(id, data, cb)
 
-### getModel(id, cb)
-
-### insert(model_id, model_data, owner, cb)
+### Model methods
+-  getModels(ids, cb)
+-  getModel(id, cb)
+-  addModel(name, model, cb)
+-  updateModel(id, model, cb)
 
 
 ## Data types
@@ -40,13 +49,3 @@
    }
 ```
 
-## Example
-
-```
-   "Tenant": {
-      id: $uuid,
-      structs: [$model_id, ...],
-      branding: $branding
-   }
-
-```
