@@ -1,4 +1,6 @@
+[Rrome Logo](/logo.png)
 # Rrome
+
 
 ## Usage
 
