@@ -17,14 +17,9 @@ var testGet = () => {
    });
 }
 rrome.on('ready', () => {
-
-   rrome.updateModel('700f66d7-c33d-48b3-b691-c26aebb12456', {"Past Address": {type: "TEXT", id: "pastAddress"}}, ["pastAddress"], (err, data) => {
-      console.log(err, data);
+   rrome.getModels(['f0e49e9d-7073-404b-95c0-e25ddbcbf5ca', '1d2b4c75-bacb-4826-8bed-f35985287c08'], (err, models) => {
+      console.log(err, models);
    });
-   rrome.updateData('67a34ffa-c714-4cdc-9aeb-45147d8b2501', {clientNo: 1111}, (err, data) => {
-
-   });
-
 });
 //testGet();
 

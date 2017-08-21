@@ -80,11 +80,13 @@ class Rrome extends EventEmitter{
    }
 
    //Model manipulation
-   getModels(cb){ 
-      const query = N1qlQuery.fromString('SELECT * FROM `' + conf.structureBucket + '` WHERE type="model"');
-      this.buckets.structures.query(query, (err, rows) => {
-         if(err) return cb(err);
-         cb(null, rows.map((x) => { return x[conf.structureBucket] }));
+   getModels(models, cb){
+      async.map(models, (item, cb) => {
+         this.getModel(item, (err, val) => { 
+            cb(err, val);
+         });
+      }, (err, res) => {
+         cb(err, res);
       });
    }
 
@@ -95,14 +97,12 @@ class Rrome extends EventEmitter{
       });
    }
 
-   addModel(name, model, display_keys, cb){
+   addModel(name, model, cb){
       var id = uuid.v4()
       var model = {
          id: id,
-         type: "model",
          name: name,
          model: model,
-         display_keys: display_keys
       }
 
       this.buckets.structures.insert(id, model, (err, res) => {
@@ -111,15 +111,14 @@ class Rrome extends EventEmitter{
       });
    }
 
-   updateModel(id, struct, display_keys, cb){
+   updateModel(id, struct, cb){
       this.getModel(id, (err, data) => {
          var model = {
             ...data,
             model: {
                ...struct,
                ...data.model
-            },
-            display_keys: data.display_keys.concat(display_keys)
+            } 
          }
 
          this.buckets.structures.replace(id, model, (err, res) => {
@@ -141,7 +140,10 @@ class Rrome extends EventEmitter{
       async.parallel([
          (cb) => {
             this.cluster.manager().createBucket(conf.structureBucket, {}, (err) => {
-               let bucket = this.cluster.openBucket(conf.structureBucket);
+               let bucket = this.cluster.openBucket(conf.structureBucket); 
+               if(err.statusCode != 400){
+                  cb(err); 
+               }
                this.initIndex(bucket, conf.structureBucket, () => {
                   cb(null, bucket);     
                });
@@ -149,7 +151,10 @@ class Rrome extends EventEmitter{
          }, 
          (cb) => {
             this.cluster.manager().createBucket(conf.dataBucket, {}, (err) => {
-               let bucket = this.cluster.openBucket(conf.dataBucket);
+               let bucket = this.cluster.openBucket(conf.dataBucket); 
+               if(err.statusCode != 400){
+                  cb(err); 
+               }
                this.initIndex(bucket, conf.dataBucket, () => {
                   cb(null, bucket);
                });
