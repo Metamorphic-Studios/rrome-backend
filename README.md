@@ -33,18 +33,9 @@
       id: $uuid,
       name: $model_name,
       model: {
-         "default": { //Special model key for primary values
-
-         },
-         "Section Header": {
-            "Input Label": {type: "STRING", id: "_input"},
-            "Input2 Label": {type: "STRING", id: "_input2"}
-         },
-         "Another Section": {
-            "Inputs": {type: "NUMBER", id: "_input3"}
-         }
+         "Input Label": {type: "STRING", id: $uuid}
       },
-      display_keys: ["_input", "_input2"]
+      display_keys: [$uuid]
    }
 ```
 
