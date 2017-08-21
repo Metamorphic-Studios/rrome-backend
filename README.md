@@ -1,4 +1,4 @@
-[Rrome Logo](/logo.png)
+![Rrome Logo](/logo.png)
 # Rrome
 
 
