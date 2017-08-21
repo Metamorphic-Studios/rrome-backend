@@ -127,6 +127,10 @@ class Rrome extends EventEmitter{
       });
    }
 
+   deleteModel(id, cb){
+      this.buckets.structures.delete(id, cb);
+   }
+
 
    //Initialisation stuff
    initIndex(bucket, bucketName, cb){

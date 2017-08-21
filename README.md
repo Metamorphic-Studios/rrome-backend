@@ -6,7 +6,7 @@ Rrome is a dynamic ORM powered by NoSQL
 ## Usage
 
 ```
-   var rrome = require('rrome')(bucket);
+   var rrome = require('rrome')(cluster);
 
    rrome.on('ready', () => {
       //Do all your roaming here 
@@ -25,7 +25,7 @@ Rrome is a dynamic ORM powered by NoSQL
 -  getModel(id, cb)
 -  addModel(name, model, cb)
 -  updateModel(id, model, cb)
-
+-  deleteModel(id, cb)
 
 ## Data types
 
@@ -43,7 +43,7 @@ Rrome is a dynamic ORM powered by NoSQL
       id: $uuid,
       name: $model_name,
       model: {
-         "Input Label": {type: "STRING", id: $uuid}
+         "Label": {type: "STRING", id: $uuid}
       },
       display_keys: [$uuid]
    }
