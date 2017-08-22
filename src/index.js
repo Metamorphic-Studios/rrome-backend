@@ -23,13 +23,13 @@ class Rrome extends EventEmitter{
    }
 
    //Data manipulation
-   insertData(id, object, cb){
-      console.log("INSERT FOR MODEL:", id);
-      this.getModel(id, (err, model) => {
+   insertData(model_id, object, id, cb){
+      console.log("INSERT FOR MODEL:", model_id);
+      this.getModel(model_id, (err, model) => {
          var model = model.model;
          var clean = utils.clean(model, object);
          var _id = uuid.v4();
-         clean._id = {model: id, id: _id}
+         clean._id = {model: model_id, id: _id, u: id}
          this.buckets.data.insert(_id, clean, (err) => {
             cb(err, _id);
          });
@@ -38,6 +38,13 @@ class Rrome extends EventEmitter{
     
    deleteData(id, cb){
       this.buckets.data.delete(id, cb);
+   }
+
+   getDatas(model, user_id, cb){
+      var q = "SELECT * FROM `" + conf.dataBucket + "` WHERE _id.u=$1 AND _id.model=$2";
+      this.buckets.data.query(N1qlQuery.fromString(q), [user_id, model], (err, rows) => {
+         cb(err, rows.map((x) => x[conf.dataBucket]));
+      });
    }
 
    getData(id, cb){

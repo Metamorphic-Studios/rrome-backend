@@ -17,8 +17,10 @@ var testGet = () => {
    });
 }
 rrome.on('ready', () => {
-   rrome.getModels(['f0e49e9d-7073-404b-95c0-e25ddbcbf5ca', '1d2b4c75-bacb-4826-8bed-f35985287c08'], (err, models) => {
-      console.log(err, models);
+   rrome.updateData('63fcbfda-8975-4dee-9448-d671361e0006', {client: "Metamorphic Studios"}, (err, rows) => {
+      rrome.getDatas('f0e49e9d-7073-404b-95c0-e25ddbcbf5ca', 121, (err, rows) => {
+         console.log(err, rows);
+      });
    });
 });
 //testGet();

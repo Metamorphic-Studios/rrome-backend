@@ -14,8 +14,9 @@ Rrome is a dynamic ORM powered by NoSQL
 ```
 
 ### Data methods
+-  getDatas(model, user, cb)
 -  getData(id, cb)
--  insertData(model, data, cb)
+-  insertData(model, data, user, cb)
 -  cloneData(id, cb)
 -  deleteData(id, cb)
 -  updateData(id, data, cb)
