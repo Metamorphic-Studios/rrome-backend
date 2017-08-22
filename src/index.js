@@ -150,8 +150,8 @@ class Rrome extends EventEmitter{
 
    //Initialisation stuff
    initIndex(bucket, bucketName, cb){
-      var q = N1qlQuery.fromString("CREATE PRIMARY INDEX ON " + bucketName + " USING GSI");
-      bucket.query(q, (err, res) => { 
+      var q = "CREATE PRIMARY INDEX ON " + bucketName + " USING GSI";
+      bucket.query(N1qlQuery.fromString(q), (err, res) => { 
          cb(err, res);
       });
    }
