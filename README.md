@@ -44,8 +44,7 @@ Rrome is a dynamic ORM powered by NoSQL
       name: $model_name,
       model: {
          "Label": {type: "STRING", id: $uuid}
-      },
-      display_keys: [$uuid]
+      }
    }
 ```
 
