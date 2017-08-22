@@ -25,6 +25,7 @@ class Rrome extends EventEmitter{
    //Data manipulation
    insertData(model_id, object, id, cb){
       console.log("INSERT FOR MODEL:", model_id);
+      if(!id)         return cb({error: "No user provided"});
       this.getModel(model_id, (err, model) => {
          var model = model.model;
          var clean = utils.clean(model, object);
@@ -87,6 +88,14 @@ class Rrome extends EventEmitter{
    }
 
    //Model manipulation
+
+   listModels(cb){
+      var q = "SELECT * FROM `" + conf.structureBucket + "`";
+      this.buckets.structures.query(N1qlQuery.fromString(q), (err, rows) => {
+         cb(err, rows.map((x) => x[conf.structureBucket]));
+      });
+   }
+
    getModels(models, cb){
       async.map(models, (item, cb) => {
          this.getModel(item, (err, val) => { 

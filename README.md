@@ -22,6 +22,7 @@ Rrome is a dynamic ORM powered by NoSQL
 -  updateData(id, data, cb)
 
 ### Model methods
+-  listModels(cb)
 -  getModels(ids, cb)
 -  getModel(id, cb)
 -  addModel(name, model, cb)
