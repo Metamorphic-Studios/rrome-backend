@@ -14,9 +14,87 @@ Rrome is a dynamic ORM powered by NoSQL
 ```
 
 ### Data methods
--  getDatas(model, user, cb)
--  getData(id, cb)
--  insertData(model, data, user, cb)
+
+#### `getDatas`
+
+Returns all data associated with a model id and user id
+
+##### Usage
+
+```javascript
+   rrome.getDatas([...ids], user, (err, data) => {
+   });
+```
+
+##### Parameters
+
+<table class="parameters">
+   <tbody>
+      <tr>
+         <td class="type">model</td>
+         <td class="parameter">model id to lookup by</td>
+      </tr>
+      <tr>
+         <td class="type">user</td>
+         <td class="parameter">user to lookup associated documents of</td>
+      </tr>
+   </tbody>
+</table>
+
+#### `getData`
+
+Returns data associated with id and user
+
+##### Usage
+
+```javascript
+   rrome.getData(id, user, (err, data) => {
+
+   });
+```
+
+##### Parameters
+
+<table class="parameters">
+   <tbody>
+      <tr>
+         <td class="type">document id</td>
+         <td class="parameter">document id to lookup</td>
+      </tr>
+      <tr>
+         <td class="type">user</td>
+         <td class="parameter">user to lookup associated with document</td>
+      </tr>
+   </tbody>
+</table>
+
+#### `insertData`
+
+Insert data with a model definition
+
+##### Usage
+
+```javascript
+   rrome.insertData(model, blob, user, (err, data) => {
+      
+   });
+```
+
+##### Parameters
+
+<table class="parameters">
+   <tbody>
+      <tr>
+         <td class="type">model id</td>
+         <td class="parameter">model id to insert data against</td>
+      </tr>
+      <tr>
+         <td class="type">data blob</td>
+         <td class="parameter">blob to insert</td>
+      </tr>
+   </tbody> 
+</table>
+
 -  cloneData(id, cb)
 -  deleteData(id, cb)
 -  updateData(id, data, cb)
