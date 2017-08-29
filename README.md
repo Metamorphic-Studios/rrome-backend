@@ -22,7 +22,7 @@ Returns all data associated with a model id and user id
 ##### Usage
 
 ```javascript
-rrome.getDatas([...ids], user, (err, data) => {
+rrome.getDatas(model, user, (err, data) => {
 
 });
 ```
@@ -61,7 +61,7 @@ rrome.getData(id, user, (err, data) => {
 <table class="parameters">
    <tbody>
       <tr>
-         <td class="type">document id</td>
+         <td class="type">id</td>
          <td class="parameter">document id to lookup</td>
       </tr>
       <tr>
@@ -90,11 +90,11 @@ rrome.insertData(model, blob, user, (err, data) => {
 <table class="parameters">
    <tbody>
       <tr>
-         <td class="type">model id</td>
+         <td class="type">model</td>
          <td class="parameter">model id to insert data against</td>
       </tr>
       <tr>
-         <td class="type">data blob</td>
+         <td class="type">blob</td>
          <td class="parameter">blob to insert</td>
       </tr>
    </tbody> 
