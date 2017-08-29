@@ -42,6 +42,8 @@ rrome.getDatas([...ids], user, (err, data) => {
    </tbody>
 </table>
 
+---
+
 #### `getData`
 
 Returns data associated with id and user
@@ -69,6 +71,8 @@ rrome.getData(id, user, (err, data) => {
    </tbody>
 </table>
 
+---
+
 #### `insertData`
 
 Insert data with a model definition
@@ -95,6 +99,8 @@ rrome.insertData(model, blob, user, (err, data) => {
       </tr>
    </tbody> 
 </table>
+
+---
 
 -  cloneData(id, cb)
 -  deleteData(id, cb)
