@@ -22,8 +22,9 @@ Returns all data associated with a model id and user id
 ##### Usage
 
 ```javascript
-   rrome.getDatas([...ids], user, (err, data) => {
-   });
+rrome.getDatas([...ids], user, (err, data) => {
+
+});
 ```
 
 ##### Parameters
@@ -48,9 +49,9 @@ Returns data associated with id and user
 ##### Usage
 
 ```javascript
-   rrome.getData(id, user, (err, data) => {
+rrome.getData(id, user, (err, data) => {
 
-   });
+});
 ```
 
 ##### Parameters
@@ -75,9 +76,9 @@ Insert data with a model definition
 ##### Usage
 
 ```javascript
-   rrome.insertData(model, blob, user, (err, data) => {
+rrome.insertData(model, blob, user, (err, data) => {
       
-   });
+});
 ```
 
 ##### Parameters
