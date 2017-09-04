@@ -1,6 +1,7 @@
 var async = require('async');
 var conf = require('../conf');
 var uuid = require('uuid');
+var N1qlQuery = require('couchbase').N1qlQuery;
 
 //a container class for accessing and managing different models
 class ModelEngine{
