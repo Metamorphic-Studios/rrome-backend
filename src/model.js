@@ -58,11 +58,11 @@ class ModelEngine{
       this.get(id, (err, data) => {
          var model = {
             ...data,
-            model: {
-               ...struct,
-               ...data.model
-            } 
+            model:struct
          }
+         this.bucket.upsert(id, model, (err) => {
+            cb(err, model);
+         });
       });
     }
   }
