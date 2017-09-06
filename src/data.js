@@ -3,6 +3,7 @@ var uuid = require('uuid');
 var utils = require('./utils');
 var Model = require('./model');
 var conf = require('../conf');
+var N1qlQuery = require('couchbase').N1qlQuery;
 //Data class for holding individual data fields by a given model id
 //in containers
 class DataEngine{
