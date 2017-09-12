@@ -17,7 +17,6 @@ class DataEngine{
     //@param 'id' the user id associated with the data value
     //@param 'object' the data value itself for storing
    insert(model_id, object, id, cb){
-      console.log("INSERT FOR MODEL:", model_id);
       if(!id)         return cb({error: "No user provided"});
       model.getModel(model_id, (err, model) => {
          var model = model.model;
