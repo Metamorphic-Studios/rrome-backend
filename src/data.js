@@ -18,7 +18,7 @@ class DataEngine{
     //@param 'object' the data value itself for storing
    insert(model_id, object, id, cb){
       if(!id)         return cb({error: "No user provided"});
-      model.getModel(model_id, (err, model) => {
+      this.model.get(model_id, (err, model) => {
          var model = model.model;
          var clean = utils.clean(model, object);
          var _id = uuid.v4();
@@ -30,8 +30,11 @@ class DataEngine{
    }
    //removes given data value 
    //@param 'id' the user id associated with the desired data value
-   remove(id, cb){
-      this.bucket.delete(id, cb);
+   remove(id, user_id, cb){
+      var q = "DELETE FROM `" + conf.dataBucket + "` WHERE _id.u=$1 AND _id.id=$2";
+      this.bucket.query(N1qlQuery.fromString(q), [user_id, id], (err, rows) => {
+         cb(err, rows);
+      });
    }
    //returns all the the data values under a given model
    //@param 'model' the structure wanting to be returned
