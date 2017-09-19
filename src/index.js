@@ -8,11 +8,13 @@ var N1qlQuery = couchbase.N1qlQuery;
 var utils = require('./utils');
 var DataEngine = require('./data.js');
 var ModelEngine = require('./model.js');
+
 class Rrome extends EventEmitter{
-   constructor(cluster){
-      super();
-      
-      this.cluster = cluster;
+   constructor(opts){
+      super(); 
+
+      this.cluster = new couchbase.Cluster(opts.host);
+      this.cluster.authenticate(opts.user, opts.password);
       this.buckets = {};
 
       this.initCluster((err, data) => {
