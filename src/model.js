@@ -25,7 +25,14 @@ class ModelEngine{
             cb(err, val);
          });
       }, (err, res) => {
-         cb(err, res);
+         var ret_models = models.map((x) => {
+            for(var i = 0; i < res.length; i++){
+               if(res[i].id == x){
+                  return res[i];
+               }
+            }
+         });
+         cb(err, ret_models);
       });
    }
    //returns a given model type

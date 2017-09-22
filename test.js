@@ -4,7 +4,7 @@ var couchbase = require('couchbase');
 
 var cluster = new couchbase.Cluster('couchbase://108.61.96.44');
 cluster.authenticate('test', 'testpassword');
-var rrome = require('./')(cluster);
+var rrome = require('./')({host: 'couchbase://108.61.96.44', user: 'test', password: 'testpassword'});
 var rromeRouter = require('../rrome_express')(rrome);
 
 rrome.on('ready', () => {

@@ -44,10 +44,11 @@ class DataEngine{
          cb(err, rows.map((x) => x[conf.dataBucket]));
       });
    }
+
    //returns a given data object 
    //@param id: the id of the data object
    get(id, cb){
-    console.log("GET:", id);
+      //TODO make user check
       this.bucket.get(id, (err, data) => {
          cb(err, data.value);
       });
