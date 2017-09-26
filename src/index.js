@@ -18,6 +18,7 @@ class Rrome extends EventEmitter{
       this.buckets = {};
 
       this.initCluster((err, data) => {
+         if(err) console.log("Error initialising couchbase buckets");
          this.model = new ModelEngine(data[0])
          this.data = new DataEngine(data[1], this.model) 
          this.emit('ready');
@@ -39,10 +40,11 @@ class Rrome extends EventEmitter{
                let bucket = this.cluster.openBucket(conf.structureBucket); 
                if(err.statusCode != 400){
                   cb(err); 
+               }else{
+                  this.initIndex(bucket, conf.structureBucket, () => {
+                     cb(null, bucket);     
+                  });
                }
-               this.initIndex(bucket, conf.structureBucket, () => {
-                  cb(null, bucket);     
-               });
             });
          }, 
          (cb) => {
@@ -50,10 +52,11 @@ class Rrome extends EventEmitter{
                let bucket = this.cluster.openBucket(conf.dataBucket); 
                if(err.statusCode != 400){
                   cb(err); 
+               }else{
+                  this.initIndex(bucket, conf.dataBucket, () => {
+                     cb(null, bucket);
+                  });
                }
-               this.initIndex(bucket, conf.dataBucket, () => {
-                  cb(null, bucket);
-               });
             });
          }
       ], (err, rows) => {
