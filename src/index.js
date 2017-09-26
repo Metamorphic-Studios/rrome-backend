@@ -18,7 +18,7 @@ class Rrome extends EventEmitter{
       this.buckets = {};
 
       this.initCluster((err, data) => {
-         if(err) console.log("Error initialising couchbase buckets");
+         if(err) console.log("Error initialising couchbase buckets: ", err);
          this.model = new ModelEngine(data[0])
          this.data = new DataEngine(data[1], this.model) 
          this.emit('ready');
