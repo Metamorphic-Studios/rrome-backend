@@ -81,10 +81,10 @@ meta-type: {
 ##### LIST
 ```
 meta-type: [
-	{
+   {
       type: ModelType,
       label: String 
-    }
+   }
 ]
 ```
 
