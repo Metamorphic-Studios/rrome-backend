@@ -73,8 +73,8 @@ One of the model types defined by rrome
 
 ```
 meta-type: {
-	id: String - Model id to select from
-    display_keys: Array - Keys to display from model
+   id: String - Model id to select from
+   display_keys: Array - Keys to display from model
 }
 ```
 
@@ -82,8 +82,8 @@ meta-type: {
 ```
 meta-type: [
 	{
-    	type: ModelType,
-        label: String 
+      type: ModelType,
+      label: String 
     }
 ]
 ```
@@ -91,9 +91,9 @@ meta-type: [
 ##### FLIST
 ```
 meta-type: {
-	id: String - Model id to select from
-    list_display: Keys to display in list
-    display_keys: Keys to display in selector
+   id: String - Model id to select from
+   list_display: Keys to display in list
+   display_keys: Keys to display in selector
 }
 ```
 
