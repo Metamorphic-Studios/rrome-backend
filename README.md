@@ -1,7 +1,7 @@
 ![Rrome Logo](/logo.png)
 
 
-Rrome is a dynamic ORM powered by NoSQL
+Rrome is a dynamic ODM powered by NoSQL
 
 ## Usage
 
@@ -13,125 +13,87 @@ Rrome is a dynamic ORM powered by NoSQL
    });
 ```
 
-### Data methods
+## Model definitions
 
-#### `getDatas`
+All models are defined as a singular JSON object with the following keys
 
-Returns all data associated with a model id and user id
+#### id - STRING (required)
 
-##### Usage
+Unique model identifier
 
-```javascript
-rrome.getDatas(model, user, (err, data) => {
+#### name - STRING (required)
 
-});
-```
+Human readable tag to easily recognize a model
 
-##### Parameters
+#### model - ARRAY (required)
 
-<table class="parameters">
-   <tbody>
-      <tr>
-         <td class="type">model</td>
-         <td class="parameter">model id to lookup by</td>
-      </tr>
-      <tr>
-         <td class="type">user</td>
-         <td class="parameter">user to lookup associated documents of</td>
-      </tr>
-   </tbody>
-</table>
+2D Array of sections and element definitions
 
----
+#### display_keys - ARRAY (required)
 
-#### `getData`
+Array of keys to use for displaying stored data
 
-Returns data associated with id and user
-
-##### Usage
-
-```javascript
-rrome.getData(id, user, (err, data) => {
-
-});
-```
-
-##### Parameters
-
-<table class="parameters">
-   <tbody>
-      <tr>
-         <td class="type">id</td>
-         <td class="parameter">document id to lookup</td>
-      </tr>
-      <tr>
-         <td class="type">user</td>
-         <td class="parameter">user to lookup associated with document</td>
-      </tr>
-   </tbody>
-</table>
-
----
-
-#### `insertData`
-
-Insert data with a model definition
-
-##### Usage
-
-```javascript
-rrome.insertData(model, blob, user, (err, data) => {
-      
-});
-```
-
-##### Parameters
-
-<table class="parameters">
-   <tbody>
-      <tr>
-         <td class="type">model</td>
-         <td class="parameter">model id to insert data against</td>
-      </tr>
-      <tr>
-         <td class="type">blob</td>
-         <td class="parameter">blob to insert</td>
-      </tr>
-   </tbody> 
-</table>
-
----
-
--  cloneData(id, cb)
--  deleteData(id, cb)
--  updateData(id, data, cb)
-
-### Model methods
--  listModels(cb)
--  getModels(ids, cb)
--  getModel(id, cb)
--  addModel(name, model, cb)
--  updateModel(id, model, cb)
--  deleteModel(id, cb)
-
-## Data types
-
-- Text
-   -  One liner
-   -  Textbox
-- Foregin list
-- Files
-- List: Model
-
-## Data structures
+## Model element definition
 
 ```
-   {
-      id: $uuid,
-      name: $model_name,
-      model: {
-         "Label": {type: "STRING", id: $uuid}
-      }
-   }
+{
+   label: String,
+   type: ModelType,
+   id: String,
+   meta-type: Object/Array
+}
+```
+
+#### label
+
+Label to describe elements value
+
+#### id
+
+Unique identifier for value, created data will use this as the key for a JSON object
+
+#### meta-type
+
+Based on the type of the element the meta-type will define some extra configuration to pass down for display or data collection
+
+#### type
+
+One of the model types defined by rrome
+
+|Type|Description|
+|--|--|
+|TEXT|Text input|
+|DATE|Date input|
+|LIST|List of objects|
+|FSELECT|Foreign selector|
+|FLIST|List of foreign objects|
+
+
+##### FSELECT
+
+```
+meta-type: {
+	id: String - Model id to select from
+    display_keys: Array - Keys to display from model
+}
+```
+
+##### LIST
+```
+meta-type: [
+	{
+    	type: ModelType,
+        label: String 
+    }
+]
+```
+
+##### FLIST
+```
+meta-type: {
+	id: String - Model id to select from
+    list_display: Keys to display in list
+    display_keys: Keys to display in selector
+}
 ```
 
